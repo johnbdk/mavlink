@@ -1595,6 +1595,26 @@
       <field type="float" name="rpm1">RPM Sensor1.</field>
       <field type="float" name="rpm2">RPM Sensor2.</field>
     </message>
+    <message id="227" name="VISUAL_MARKER_TARGET">
+      <description>The location of a visual marker.</description>
+      <field type="uint64_t" name="time_usec" units="us">Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude the number.</field>
+      <field type="uint8_t" name="target_num">The ID of the target if multiple targets are present</field>
+      <field type="uint8_t" name="frame" enum="MAV_FRAME">Coordinate frame used for following fields.</field>
+      <field type="float" name="x" units="m">X Position of the visual marker in MAV_FRAME</field>
+      <field type="float" name="y" units="m">Y Position of the visual marker in MAV_FRAME</field>
+      <field type="float" name="z" units="m">Z Position of the visual marker in MAV_FRAME</field>
+      <field type="float[4]" name="q">Quaternion of visual marker orientation (w, x, y, z order, zero-rotation is 1, 0, 0, 0)</field>
+      <field type="uint8_t" name="position_valid">Boolean indicating whether the position fields (x, y, z, q, type) contain valid target position information (valid: 1, invalid: 0). Default is 0 (invalid).</field>
+    </message>
+    <message id="228" name="SET_FAULT_INJECTION">
+      <description>Fault injection D parameter for marker precision landing sub-system.</description>
+      <field type="uint64_t" name="time_usec" units="us">Timestamp (UNIX Epoch time or time since system boot). The receiving end can infer timestamp format (since 1.1.1970 or since system boot) by checking for the magnitude the number.</field>
+      <field type="uint8_t" name="target_subsystem">Sybsystem id used for following fields (0: marker and irlock, 1: marker, 2: irlock).</field>
+      <field type="float" name="fi_rate_marker">Determines whether/how to drop the measurements received from the marker sensor sub-system (0: no errors (no artificial faults, normal operation), > 0: inject error every nth measurement (periodic fault injection, &lt; 0: inject error with propability |D%| (random fault injection)). Default is 0.</field>
+      <field type="float" name="fi_error_marker">Determines the error added to the measurements received from the marker sensor sub-system (0: simply drop, !=0: add E% to each element of the sensor vector measurement. Default is 0.</field>
+      <field type="float" name="fi_rate_irlock">Determines whether/how to drop the measurements received from the marker sensor sub-system (0: no errors (no artificial faults, normal operation), > 0: inject error every nth measurement (periodic fault injection, &lt; 0: inject error with propability |D%| (random fault injection)). Default is 0.</field>
+      <field type="float" name="fi_error_irlock">Determines the error added to the measurements received from the irlock sensor sub-system (0: simply drop, !=0: add E% to each element of the sensor vector measurement. Default is 0.</field>
+    </message>
     <!-- ardupilot specific mavlink2 messages starting at 11000-->
     <message id="11000" name="DEVICE_OP_READ">
       <description>Read registers for a device.</description>
